@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Send, Building2, User, Mail, Phone, Briefcase, FileText, DollarSign, Loader2, CheckCircle2 } from "lucide-react";
+import { Send, Building2, Briefcase, DollarSign, Loader2, CheckCircle2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,6 +42,8 @@ export default function RequestService() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [providerEnabled, setProviderEnabled] = useState(false);
   const [form, setForm] = useState({
     company_name: "",
     applicant_name: "",
@@ -73,6 +75,9 @@ export default function RequestService() {
       incubation_percentage: incPct,
       total_fee: totalFee,
       status: "جديد",
+      terms_accepted: termsAccepted,
+      provider_enabled: providerEnabled,
+      automation_status: "لم يبدأ",
     });
     setLoading(false);
     setSubmitted(true);
@@ -212,6 +217,48 @@ export default function RequestService() {
             </div>
           </motion.div>
         )}
+
+        {/* Terms & Provider */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="bg-card rounded-2xl p-6 shadow-sm border-2 border-[#C9E8D8]"
+        >
+          <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-[#2D7A3E]" />
+            الشروط والممكنات التشغيلية
+          </h3>
+          <div className="space-y-3">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                className="mt-1 w-4 h-4 rounded accent-primary"
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+              />
+              <span className="text-sm text-foreground">
+                أوافق على شروط وأحكام برنامج الإدارة الرشيدة وسياسة الاحتضان في شركة فلك للموارد البشرية، وأقر بأحقية تسجيل المشروع في منصة سيان (مشاة) كخدمة مقدمة من الحاضنة.
+              </span>
+            </label>
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                className="mt-1 w-4 h-4 rounded accent-primary"
+                checked={providerEnabled}
+                onChange={(e) => setProviderEnabled(e.target.checked)}
+              />
+              <span className="text-sm text-foreground">
+                أؤكد توفر الممكنات التشغيلية اللازمة من قبلي كمقدم خدمة (الموارد البشرية، الموقع، التراخيص) وأنني مستعد لبدء تقديم الخدمة فور الموافقة.
+              </span>
+            </label>
+          </div>
+          {termsAccepted && providerEnabled && (
+            <p className="mt-3 text-xs text-[#2D7A3E] bg-[#C9E8D8]/40 rounded-lg p-2">
+              ✅ ستنطلق الأتمتة الكاملة تلقائياً بعد الإرسال: التحقق → تفعيل الخدمة → التسجيل في سيان → تفعيل الحاضنة → الربط المالي
+            </p>
+          )}
+        </motion.div>
 
         <div className="flex justify-end">
           <Button type="submit" size="lg" className="rounded-xl px-8" disabled={loading}>

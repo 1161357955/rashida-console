@@ -18,6 +18,7 @@ import RequestService from '@/pages/RequestService';
 import PricingCalculator from '@/pages/PricingCalculator';
 import ProceduralGuide from '@/pages/ProceduralGuide';
 import MyRequests from '@/pages/MyRequests';
+import AutomationDashboard from '@/pages/AutomationDashboard';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -56,6 +57,7 @@ const AuthenticatedApp = () => {
           <Route path="/pricing-calculator" element={<PricingCalculator />} />
           <Route path="/procedural-guide" element={<ProceduralGuide />} />
           <Route path="/my-requests" element={<MyRequests />} />
+          <Route path="/automation" element={<AutomationDashboard />} />
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />

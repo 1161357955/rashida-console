@@ -11,7 +11,8 @@ import {
   Menu,
   X,
   ChevronLeft,
-  Building2
+  Building2,
+  Zap
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +22,7 @@ const navItems = [
   { label: "حاسبة التسعير", path: "/pricing-calculator", icon: Calculator },
   { label: "الدليل الإجرائي", path: "/procedural-guide", icon: FolderOpen },
   { label: "طلباتي", path: "/my-requests", icon: FileText },
+  { label: "التكامل الآلي", path: "/automation", icon: Zap },
 ];
 
 export default function Sidebar() {
